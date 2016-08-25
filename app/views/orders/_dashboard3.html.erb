@@ -32,7 +32,7 @@
 				<% sto = ["MTW","TML","PRC"] %>
 				<td rowspan=<%= sto.count+1 %> bgcolor='lightblue' >MTW</td>
 				<% when "???" %>
-				<% sto = ["PTZ"] %>
+				<% sto = ["PTZ","NEG","PPS"] %>
 				<td rowspan=<%= sto.count+1 %> bgcolor='orange' >???</td>
 				<% else %>
 				<% sto = nil %>
@@ -40,14 +40,20 @@
 				<% end %>
 				<% sto.each do |stox| %>				
 				<tr>
+
+					<% query_gpon = "clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%","%ODP%" %>
+					<% query_cust = "type_cust like ? OR type_cust like ? OR type_cust like ? OR type_cust like ?", "%SILVER%","%GOLD%","%TITANIUM%","%PLATINUM%"%>
+					<% query_sto = "sto like ?", "%#{stox}%"%>
+					<% query = Nonatero.where(witel: 'KALTENG').where(query_sto).where(query_gpon).where(query_cust) %>
+
 					<td><%= stox %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%").where(hari: 0..1).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%").where(hari: 1..3).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%").where(hari: 3..7).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%").where(hari: 7..15).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%").where(hari: 15..30).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%").where.not(hari: 0..30).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%").count %></td>
+					<td><%= query.where(hari: 0..1).count %></td>
+					<td><%= query.where(hari: 1..3).count  %></td>
+					<td><%= query.where(hari: 3..7).count  %></td>
+					<td><%= query.where(hari: 7..15).count  %></td>
+					<td><%= query.where(hari: 15..30).count  %></td>
+					<td><%= query.where.not(hari: 0..30).count  %></td>
+					<td><%= query.count %></td>
 				</tr>
 				<% end %>
 			<% end %>
@@ -87,7 +93,7 @@
 				<% sto = ["MTW","TML","PRC"] %>
 				<td rowspan=<%= sto.count+1 %> bgcolor='lightblue' >MTW</td>
 				<% when "???" %>
-				<% sto = ["PTZ"] %>
+				<% sto = ["PTZ","NEG","PPS"] %>
 				<td rowspan=<%= sto.count+1 %> bgcolor='orange' >???</td>
 				<% else %>
 				<% sto = nil %>
@@ -95,14 +101,20 @@
 				<% end %>
 				<% sto.each do |stox| %>				
 				<tr>
+
+					<% query_cooper = "clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%" %>
+					<% query_cust = "type_cust like ? OR type_cust like ? OR type_cust like ? OR type_cust like ?", "%SILVER%","%GOLD%","%TITANIUM%","%PLATINUM%"%>
+					<% query_sto = "sto like ?", "%#{stox}%"%>
+					<% query = Nonatero.where(witel: 'KALTENG').where(query_sto).where(query_cooper).where(query_cust) %>
+
 					<td><%= stox %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%").where(hari: 0..1).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%").where(hari: 1..3).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%").where(hari: 3..7).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%").where(hari: 7..15).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%").where(hari: 15..30).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%").where.not(hari: 0..30).count %></td>
-					<td><%= Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{stox}%").where("clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%").count %></td>
+					<td><%= query.where(hari: 0..1).count %></td>
+					<td><%= query.where(hari: 1..3).count %></td>
+					<td><%= query.where(hari: 3..7).count %></td>
+					<td><%= query.where(hari: 7..15).count %></td>
+					<td><%= query.where(hari: 15..30).count %></td>
+					<td><%= query.where.not(hari: 0..30).count %></td>
+					<td><%= query.count %></td>
 				</tr>
 				<% end %>
 			<% end %>

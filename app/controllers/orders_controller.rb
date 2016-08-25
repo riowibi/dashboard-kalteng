@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
 	require 'nokogiri'
     require 'tzinfo'
     require 'net/https'
-
+ 
 
 	def index
         
@@ -38,7 +38,11 @@ class OrdersController < ApplicationController
 	end
 
 	def download
-        
+        sto = params[:datel]
+        query_gpon = "clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%","%ODP%"
+        query_cooper = "clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%"
+        query_cust = "type_cust like ? OR type_cust like ? OR type_cust like ? OR type_cust like ?", "%SILVER%","%GOLD%","%TITANIUM%","%PLATINUM%"
+        query_sto = "sto like ?", "%#{sto}%"
         today = Date.today
 		if Order.exists?
 			case params[:query]
@@ -54,22 +58,30 @@ class OrdersController < ApplicationController
 				@orders = Order.where(sto: params[:datel]).where(status_va: "VA").where(status: "Process OSS (Provision Issued)")
 			when "AC"
 				@orders = Order.where(sto: params[:datel]).where(status_va: "VA").where(status: "Process OSS (Activation Completed)")
+            when "GPON < 1"
+                @rocks = Nonatero.where(witel: 'KALTENG').where(query_sto).where(query_gpon).where(query_cust).where(hari: 0..1)
+            when "GPON 2 - 3"
+                @rocks = Nonatero.where(witel: 'KALTENG').where(query_sto).where(query_gpon).where(query_cust).where(hari: 1..3)
+            when "GPON 4 - 7"
+                @rocks = Nonatero.where(witel: 'KALTENG').where(query_sto).where(query_gpon).where(query_cust).where(hari: 3..7)
+            when "GPON 8 - 15"
+                @rocks = Nonatero.where(witel: 'KALTENG').where(query_sto).where(query_gpon).where(query_cust).where(hari: 7..15)
+            when "GPON 16 - 30"
+                @rocks = Nonatero.where(witel: 'KALTENG').where(query_sto).where(query_gpon).where(query_cust).where(hari: 15..30)
+            when "GPON 30 >"
+                @rocks = Nonatero.where(witel: 'KALTENG').where(query_sto).where(query_gpon).where(query_cust).where.not(hari: 0..30)
         # when "PS"
         # @orders = Order.where(orderdate: Date.today).where(sto: params[:datel]).where(status_va: "VA").where(status: "Completed (PS)")
-    else
-    	@orders = Order.order(:orderdate)
+            else
+            	@orders = Order.order(:orderdate)
+            end
+            respond_to do |format|
+                format.html
+                format.csv { send_data @orders.to_csv }
+                format.xls { send_data @orders.to_csv(col_sep: "\t") }
+            end
+        end
     end
-    respond_to do |format|
-    	format.html
-    	format.csv { send_data @orders.to_csv }
-    	format.xls { send_data @orders.to_csv(col_sep: "\t") }
-    end
-end
-end
-
-def show
-
-end
 
     def starclick
 
