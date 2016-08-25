@@ -23,3 +23,10 @@ test:
 production:
   <<: *default
   database: db/production.sqlite3
+
+db_roc:
+ adapter: postgresql
+ host: rock.telkom.co.id
+ database: rocnas
+ username: treg2
+ password: telkom#treg2  

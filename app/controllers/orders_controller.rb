@@ -10,7 +10,14 @@ class OrdersController < ApplicationController
 
 
 	def index
-		encode_url = URI.encode("http://mydashboard.telkom.co.id/ms2/detil_progres_useetv2_.php?sub_chanel=%&chanel=%&p_kawasan=DIVRE_6&witel=KALTENG&indihome=&kode=1&c_witel=43&p_cseg=%&p_etat=5&start_date=25/08/2016&end_date=25/08/2016&indihome=&migrasi=&starclick=&plblcl=&inden=&status_order=PS")
+        
+        @datel = ['PLK','PBU','SAI',"MTW",'???']
+        
+        # @gangguanGpon = Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{sto}%").where("clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ?", "09%","GP%","09%","GP%","09%","GP%").count
+
+        # @gangguanCooper = Nonatero.where(witel: 'KALTENG').where("sto like ?", "%#{sto}%").where("clid like ? OR clid like ? OR clid like ? OR node_id like ? OR node_id like ? OR node_id like ? OR headline like ? OR headline like ? OR headline like ?", "COO%","MSA%","DSLA%","COO%","MSA%","DSLA%","COO%","MSA%","DSLA%").count
+		
+        encode_url = URI.encode("http://mydashboard.telkom.co.id/ms2/detil_progres_useetv2_.php?sub_chanel=%&chanel=%&p_kawasan=DIVRE_6&witel=KALTENG&indihome=&kode=1&c_witel=43&p_cseg=%&p_etat=5&start_date=25/08/2016&end_date=25/08/2016&indihome=&migrasi=&starclick=&plblcl=&inden=&status_order=PS")
 		@psb = Nokogiri::HTML(open(encode_url))
     
 		if Order.exists?
@@ -27,6 +34,7 @@ class OrdersController < ApplicationController
 				format.xls { send_data @orders.to_csv(col_sep: "\t") }
 			end
 		end
+
 	end
 
 	def download

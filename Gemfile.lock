@@ -89,6 +89,8 @@ GEM
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
     open_uri_redirections (0.2.1)
+    pg (0.18.4)
+    pg (0.18.4-x86-mingw32)
     pkg-config (1.1.7)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -179,6 +181,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   open_uri_redirections
+  pg
   rails (= 4.2.2)
   roo
   sass-rails (~> 5.0.6)

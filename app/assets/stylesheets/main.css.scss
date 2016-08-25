@@ -26,6 +26,16 @@ div#dashboard2 .col-md-12 table tr th {
 	color:white;
 }
 
-table#dashboard-table {
+table.dashboard-table {
 	margin:auto;
+}
+
+div#dashboard3 .col-md-12 table{
+	text-align:center;
+}
+
+div#dashboard3 .col-md-12 table thead td {
+	width:100px;
+	text-align:center;
+	color:white;
 }
