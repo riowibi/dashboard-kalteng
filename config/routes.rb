@@ -1,16 +1,17 @@
 
 Rails.application.routes.draw do
 
-  resources :orders do
-    collection { post :import }
-    collection { post :starclick }
+  resources :orders, :only => [:index] do
+
   end
 
   root "orders#index"
 
-  get '/starclick' => 'orders#starclick', as: 'starclick'
-  get '/ms2n' => 'orders#ms2n', as: 'ms2n'
-  get '/download' => 'orders#download', as: 'download'
+  get '/orders/starclick' => 'orders#starclick', as: 'starclick'
+  get '/orders/download' => 'orders#download', as: 'downloadpi'
+
+  get '/assurance' => 'assurances#index', as: 'assurance'
+  get '/assurance/download' => 'assurances#download', as: 'downloadggn'
   #match ":controller(/:action(
   
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	</head>
+
+<body>
+	<div class="container">
+		<div>
+			<%= flash[:notice] %><br>
+			<b>Total Data Witel Kalteng :</b> <%= Order.count %><br>
+			<b>Today :</b> <%= Date.today %><br>
+			<b>Tiket Gangguan HI : </b><%= link_to @ggn.count, downloadggn_url(format: "xls", query: " - ") %>
+		</div>
+		<hr>
+		<br>
+		<%= render(:partial => "dashboards/dashboard_assurance_dcs") %>
+		<br><br>	
+	</div>
+</body>
+</html>
+

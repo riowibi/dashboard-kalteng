@@ -10,17 +10,13 @@
 			<%= flash[:notice] %><br>
 			<b>Total Data Witel Kalteng :</b> <%= Order.count %><br>
 			<b>Today :</b> <%= Date.today %><br>
-			<b>PSB : </b><%= @psb.css("table tr[bgcolor='']").count %>
+			<b>PSB HI: </b><%= @psb.css("table tr[bgcolor='']").count %>
 		</div>
 		<hr>
-		<br>
-		<%= render(:partial => "dashboard3") %>
-		<br>
-		<hr>
-		<%= render(:partial => "dashboard1") %>
+		<%= render(:partial => "dashboards/dashboard_psb") %>
 		<br>
 		<hr>
-		<%= render(:partial => "dashboard2") %>
+		<%= render(:partial => "dashboards/dashboard_pi") %>
 		<br><br>	
 		<hr>		
 		<div class="row">
